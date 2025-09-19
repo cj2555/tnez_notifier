@@ -4,7 +4,7 @@ export async function POST(req: Request) {
   try {
     const { message } = await req.json();
 
-    const webhookUrl = process.env.DISCORD_WEBHOOK_URL!;
+    const webhookUrl = "https://discord.com/api/webhooks/1399473650448728085/D0T91KtFnwf612BPs24JrcvBZGRNejcPOtcZBsAsn4rJC6u8yvqoE3LukGSfMQEO4J_i";
     const discordRes = await fetch(webhookUrl, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -18,7 +18,8 @@ export async function POST(req: Request) {
     }
 
     return NextResponse.json({ success: true, sent: message });
-  } catch (err: any) {
-    return NextResponse.json({ error: err.message }, { status: 500 });
+  } catch (err) {
+    const errorMessage = err instanceof Error ? err.message : 'An unknown error occurred';
+    return NextResponse.json({ error: errorMessage }, { status: 500 });
   }
 }
